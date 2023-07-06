@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:toonflix/challenge/first.dart';
 import 'package:toonflix/widgets/Button.dart';
 import 'package:toonflix/widgets/currency-card.dart';
 
 void main() {
-  runApp(App());
+  runApp(FirstApp());
 }
 
 // root  widget
@@ -110,7 +110,7 @@ class App extends StatelessWidget {
                   child: const CurrencyCard(name: "Bitcoin", code: "BTC", amount: "9 785", icon: Icons.currency_bitcoin, isInverted: true,)),
                 Transform.translate(
                   offset: const Offset(0, -40),
-                  child: const CurrencyCard(name: "Dollars", code: "USD", amount: "428", icon: Icons.money, isInverted: false,)),
+                  child: const CurrencyCard(name: "Dollars", code: "USD", amount: "428", icon: Icons.money_outlined, isInverted: false,)),
               ],
             ),
           ),
