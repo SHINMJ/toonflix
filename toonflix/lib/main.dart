@@ -24,34 +24,47 @@ class _AppState extends State<App> {
     });
   }
 
+/// BuildContext : 위젯 트리에 대한 정보가 담겨 있음.
+/// 해당 위젯이 어떤 위젯이고 어느 위치에 있는지 알 수 있음.
   @override
   Widget build(BuildContext context) {
     //테마 선택 : MaterialApp 혹은 CupertinoApp
     return MaterialApp(
+      theme: ThemeData(
+        textTheme: const TextTheme(
+          titleLarge: TextStyle(
+            color: Colors.red,
+          ),
+        ),
+      ),
       home: Scaffold(
           backgroundColor: const Color(0xfff4eddb),
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'Click Count',
-                  style: TextStyle(
-                    fontSize: 30,
-                  ),
-                ),
-                IconButton(
-                  iconSize: 40,
-                  onPressed: onClicked,
-                  icon: const Icon(Icons.add_box_rounded),
-                ),
-                for (var n in numbers) Text('$n', 
-                  style: const TextStyle(
-                    fontSize: 30,
-                  )),
+              children: const [
+                MyLargeTitle(),
+               
               ],
             ),
           )),
+    );
+  }
+}
+
+class MyLargeTitle extends StatelessWidget {
+  const MyLargeTitle({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return  Text(
+      'Large Title',
+      style: TextStyle(
+        fontSize: 30,
+        color: Theme.of(context).textTheme.titleLarge!.color
+      ),
     );
   }
 }
