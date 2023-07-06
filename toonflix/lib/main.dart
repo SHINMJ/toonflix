@@ -14,41 +14,41 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  int _counter = 0;
+  List<int> numbers = [];
 
-  void onClicked(){
+  void onClicked() {
     // State 클래스에 데이터가 변경되었다고 알려줌.
     // setState 가 호출되면 ui를 새로 그림.
     setState(() {
-      _counter++;  
+      numbers.add(numbers.length);
     });
-    
   }
 
   @override
   Widget build(BuildContext context) {
     //테마 선택 : MaterialApp 혹은 CupertinoApp
     return MaterialApp(
-      home:
-          Scaffold(backgroundColor: const Color(0xfff4eddb), 
+      home: Scaffold(
+          backgroundColor: const Color(0xfff4eddb),
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Click Count',
+                const Text(
+                  'Click Count',
                   style: TextStyle(
-                    fontSize: 30,
-                  ),
-                ),
-                Text('$_counter',
-                  style: const TextStyle(
                     fontSize: 30,
                   ),
                 ),
                 IconButton(
                   iconSize: 40,
-                  onPressed: onClicked, icon: const Icon(Icons.add_box_rounded),
+                  onPressed: onClicked,
+                  icon: const Icon(Icons.add_box_rounded),
                 ),
+                for (var n in numbers) Text('$n', 
+                  style: const TextStyle(
+                    fontSize: 30,
+                  )),
               ],
             ),
           )),
