@@ -15,6 +15,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   List<int> numbers = [];
+  bool showTitle = true;
 
   void onClicked() {
     // State 클래스에 데이터가 변경되었다고 알려줌.
@@ -24,8 +25,14 @@ class _AppState extends State<App> {
     });
   }
 
-/// BuildContext : 위젯 트리에 대한 정보가 담겨 있음.
-/// 해당 위젯이 어떤 위젯이고 어느 위치에 있는지 알 수 있음.
+  void toggleTitle() {
+    setState(() {
+      showTitle = !showTitle;
+    });
+  }
+
+  /// BuildContext : 위젯 트리에 대한 정보가 담겨 있음.
+  /// 해당 위젯이 어떤 위젯이고 어느 위치에 있는지 알 수 있음.
   @override
   Widget build(BuildContext context) {
     //테마 선택 : MaterialApp 혹은 CupertinoApp
@@ -42,9 +49,9 @@ class _AppState extends State<App> {
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                MyLargeTitle(),
-               
+              children: [
+                showTitle ? const MyLargeTitle() : const Text('Nothing'),
+                IconButton(onPressed: toggleTitle, icon: const Icon(Icons.remove_red_eye_outlined))
               ],
             ),
           )),
@@ -52,19 +59,42 @@ class _AppState extends State<App> {
   }
 }
 
-class MyLargeTitle extends StatelessWidget {
+class MyLargeTitle extends StatefulWidget {
   const MyLargeTitle({
     super.key,
   });
 
   @override
+  State<MyLargeTitle> createState() => _MyLargeTitleState();
+}
+
+class _MyLargeTitleState extends State<MyLargeTitle> {
+  /// 상태 초기화
+  /// build 메서드보다 먼저 호출되어야 함.
+  /// 한번만 호출됨.
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('initState');
+  }
+
+  /// 위젯이 스크린에서 사라질 때 호출
+  /// 위젯이 위젯트리에서 제거되기 전에 호출됨.
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    print('dispose');
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return  Text(
+    print('build');
+    return Text(
       'Large Title',
       style: TextStyle(
-        fontSize: 30,
-        color: Theme.of(context).textTheme.titleLarge!.color
-      ),
+          fontSize: 30, color: Theme.of(context).textTheme.titleLarge!.color),
     );
   }
 }
