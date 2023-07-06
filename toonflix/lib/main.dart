@@ -18,6 +18,7 @@ class _AppState extends State<App> {
 
   void onClicked(){
     // State 클래스에 데이터가 변경되었다고 알려줌.
+    // setState 가 호출되면 ui를 새로 그림.
     setState(() {
       _counter++;  
     });
