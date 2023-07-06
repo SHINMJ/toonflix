@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:toonflix/challenge/first.dart';
-import 'package:toonflix/screens/home.dart';
+import 'package:toonflix/challenge/pomotimer.dart';
+
 
 void main() {
   runApp(App());
@@ -17,15 +17,15 @@ class App extends StatelessWidget {
     //테마 선택 : MaterialApp 혹은 CupertinoApp
     return MaterialApp(
       theme: ThemeData(
-        backgroundColor: const Color(0xFFE7626C),
+        backgroundColor: const Color(0xFFE64D3D),
         textTheme: const TextTheme(
           displayLarge: TextStyle(
-            color: Color(0xff232b55),
+            color: Color(0xfff4eddb),
           ),
         ),
         cardColor: const Color(0xfff4eddb),
       ),
-      home: HomeScreen(),
+      home: const Pomotimer(),
     );
   }
 }
