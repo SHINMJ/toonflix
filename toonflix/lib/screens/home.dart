@@ -1,147 +1,45 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:toonflix/models/webtoon_model.dart';
+import 'package:toonflix/services/api_service.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
+class Home extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeState createState() => _HomeState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  static const twentyFiveMinutes = 1500;
-  int totalSeconds = twentyFiveMinutes;
-  bool isRunning = false;
-  int totalPomodors = 0;
-  late Timer timer;
+class _HomeState extends State<Home> {
+  List<WebtoonModel> webtoons = [];
+  bool isLoading = true;
 
-  void onTick(Timer timer) {
-    if (totalSeconds == 0) {
-      setState(() {
-        totalPomodors = totalPomodors + 1;
-        isRunning = false;
-        totalSeconds = twentyFiveMinutes;
-      });
-      timer.cancel();
-    } else {
-      setState(() {
-        totalSeconds--;
-      });
-    }
+  void waitForWebtoons() async {
+    webtoons = await ApiService.getTodaysToons();
+    isLoading = false;
+
+    setState(() {});
   }
 
-  void onStartPressed() {
-    timer = Timer.periodic(const Duration(seconds: 1), onTick);
-    setState(() {
-      isRunning = true;
-    });
-  }
-
-  void onPausePressed() {
-    timer.cancel();
-    setState(() {
-      isRunning = false;
-    });
-  }
-
-  void onRestartPressed() {
-    timer.cancel();
-    setState(() {
-      totalSeconds = twentyFiveMinutes;
-    });
-    timer = Timer.periodic(const Duration(seconds: 1), onTick);
-  }
-
-  String format(int seconds) {
-    var duration = Duration(seconds: seconds);
-    return duration.toString().split(".").first.substring(2);
+  @override
+  void initState() {
+    super.initState();
+    waitForWebtoons();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(webtoons);
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: Column(
-        children: [
-          Flexible(
-            flex: 1,
-            child: Container(
-              alignment: Alignment.bottomCenter,
-              child: Text(
-                format(totalSeconds),
-                style: TextStyle(
-                  color: Theme.of(context).cardColor,
-                  fontSize: 89,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text(
+          '오늘의 웹툰',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w500,
           ),
-          Flexible(
-            flex: 3,
-            child: Center(
-              child: Column(
-                children: [
-                  IconButton(
-                    icon: Icon(isRunning
-                        ? Icons.pause_circle_outline
-                        : Icons.play_circle_outline),
-                    onPressed: isRunning ? onPausePressed : onStartPressed,
-                    iconSize: 120,
-                    color: Theme.of(context).cardColor,
-                  ),
-                  IconButton(
-                    onPressed: onRestartPressed,
-                    icon: const Icon(Icons.restart_alt),
-                    iconSize: 60,
-                    color: Theme.of(context).cardColor,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Flexible(
-            flex: 1,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Pomodors',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .displayLarge!
-                                  .color),
-                        ),
-                        Text(
-                          '$totalPomodors',
-                          style: TextStyle(
-                              fontSize: 60,
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .displayLarge!
-                                  .color),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
+        foregroundColor: Colors.green,
+        backgroundColor: Colors.white,
+        elevation: 80,
       ),
     );
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toonflix/challenge/pomotimer.dart';
-
+import 'package:toonflix/screens/home.dart';
 
 void main() {
   runApp(App());
@@ -10,6 +9,9 @@ void main() {
 // StatelessWidget => 데이터(상태)의 변화없이 오로지 화면을 보여주기만 함.
 // StatefulWidget => 데이터의 변화를 볼 수 있음.
 class App extends StatelessWidget {
+  //key = widget을 식별하는 id
+  const App({super.key});
+
   /// BuildContext : 위젯 트리에 대한 정보가 담겨 있음.
   /// 해당 위젯이 어떤 위젯이고 어느 위치에 있는지 알 수 있음.
   @override
@@ -25,7 +27,7 @@ class App extends StatelessWidget {
         ),
         cardColor: const Color(0xfff4eddb),
       ),
-      home: const Pomotimer(),
+      home: Home(),
     );
   }
 }
