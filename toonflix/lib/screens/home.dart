@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toonflix/models/webtoon_model.dart';
+import 'package:toonflix/screens/widgets/webtoon_widget.dart';
 import 'package:toonflix/services/api_service.dart';
 
 class Home extends StatelessWidget {
@@ -21,13 +22,12 @@ class Home extends StatelessWidget {
         ),
         foregroundColor: Colors.green,
         backgroundColor: Colors.white,
-        elevation: 80,
+        elevation: 2,
       ),
       body: FutureBuilder(
         future: webtoons,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-
             /// 화면에 보이는 것만 그릴 수 있다.
             /// 스크롤이 진행되면 필요한 것을 그린다.
             return Column(
@@ -54,38 +54,8 @@ class Home extends StatelessWidget {
       itemCount: snapshot.data!.length,
       itemBuilder: (context, index) {
         var webtoon = snapshot.data![index];
-        return Column(
-          children: [
-            Container(
-              width: 250,
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                borderRadius:  BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 15,
-                    offset: const Offset(10, 10),
-                    color: Colors.black.withOpacity(0.5),
-                  ),
-                ] 
-              ),
-              child: Image.network(
-                webtoon.thumb,
-                //403 에러 -> user-agent를 변경한다. 네이버 웹툰 이미지를 가져오는 실습에서 네이버가 차단하는 것 같음.
-                headers: const {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",},
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              webtoon.title,
-              style: const TextStyle(
-                fontSize: 22,
-              ),
-            ),
-          ],
-        );
+        return Webtoon(
+            title: webtoon.title, thumb: webtoon.thumb, id: webtoon.id,);
       },
       separatorBuilder: (context, index) => const SizedBox(
         width: 40,
