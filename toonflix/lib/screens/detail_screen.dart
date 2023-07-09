@@ -26,7 +26,7 @@ class _DetailScreenState extends State<DetailScreen> {
   Future initPrefs() async {
     prefs = await SharedPreferences.getInstance();
     final likedToons = prefs.getStringList(likedToonsKey);
-    print(likedToons);
+    
     if (likedToons != null) {
       if (likedToons.contains(widget.id) == true) {
         setState(() {
