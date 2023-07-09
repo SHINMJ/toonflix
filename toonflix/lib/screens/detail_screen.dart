@@ -35,6 +35,7 @@ class DetailScreen extends StatelessWidget {
          Row(
            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              /// 같은 tag를 가진 두개의 위젯을 연결.
               Hero(
                 tag: id,
                 child: Container(
