@@ -9,7 +9,6 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(webtoons);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -28,9 +27,21 @@ class Home extends StatelessWidget {
         future: webtoons,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const Text('There is data');
+            /// 화면에 보이는 것만 그릴 수 있다.
+            /// 스크롤이 진행되면 필요한 것을 그린다.
+            return ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                var webtoon = snapshot.data![index];
+                return Text(webtoon.title);
+              }, 
+              separatorBuilder: (context, index) => const SizedBox(width: 20,),
+            );
           }
-          return const Text('Loading...');
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         },
       ),
     );
